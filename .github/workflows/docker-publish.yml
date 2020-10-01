@@ -50,11 +50,11 @@ jobs:
         run: docker build . --file Dockerfile --tag $IMAGE_NAME
 
       - name: Log into GitHub Container Registry
-        run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login https://docker.pkg.github.com/getditto/${IMAGE_NAME} -u ${{ github.actor }} --password-stdin
+        run: echo "${{ secrets.QUAY_TOKEN }}" | docker login quay.io -u "ditto+github_actions" --password-stdin
 
       - name: Push image to GitHub Container Registry
         run: |
-          IMAGE_ID=docker.pkg.github.com/${{ github.repository_owner }}/$IMAGE_NAME/kubernetes-do
+          IMAGE_ID=quay.io/ditto/$IMAGE_NAME
 
           # Change all uppercase to lowercase
           IMAGE_ID=$(echo $IMAGE_ID | tr '[A-Z]' '[a-z]')
